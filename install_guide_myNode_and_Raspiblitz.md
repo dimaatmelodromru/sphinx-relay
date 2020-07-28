@@ -4,8 +4,8 @@ This guide is focused on installing Sphinx-relay on top of myNode. Information a
 
 ### Preparations
 
-* Be able to connect with your node through SSH.
-* Make sure you are running LND version `0.10.0` or higher. This can be seen at http://mynode.local/lnd at the right top. Or by inserting the following console command:
+* Be able to connect to your node through SSH.
+* Make sure you are running LND version `0.10.0` or higher. This can be seen at http://mynode.local/lnd at the right top or by typing in the following console command:
 
 ```sh
 $ lncli getinfo
@@ -15,6 +15,12 @@ $ lncli getinfo
 ---
 ## Let's Start
 
+### Install dependencies
+
+sqlite3: `$ sudo apt-get install sqlite3`
+
+python2: `$ sudo apt-get install python2`
+
 ### Open port 3001 on myNode
 
 Open up a console window with SSH. And log in as root
@@ -23,8 +29,8 @@ $ sudo su
 ```
 Open up port 3001 on your machine and make sure it has been added to the list.
 ```sh 
-$ ufw allow 3001 comment 'allow Sphinx-Chat'
-$ ufw status
+# ufw allow 3001 comment 'allow Sphinx-Chat'
+# ufw status
 
 > Status: active
 >
@@ -42,21 +48,15 @@ $ cd
 ```
 Clone the repository from Github and install the package.
 ```sh 
-$ git clone https://github.com/stakwork/sphinx-relay
+ git clone https://github.com/stakwork/sphinx-relay
 $ cd sphinx-relay
 $ npm install
 ```
-### Dependencies
-
-sqlite3: `$ sudo apt-get install sqlite3`
-
-python2: `$ sudo apt-get install python2`
 
 ### Configure
 Edit the "production" section of config/app.json.
 ```sh 
-$ cd
-$ cd sphinx-relay/config/
+$ cd config
 $ nano app.json
 ```
 Change the following 4 lines:
@@ -116,7 +116,7 @@ We need LND to run with keysend activated. First we check if it is already activ
 #### myNode:
 Go to http://mynode.local/lnd/config and check if the line `accept-keysend=1` (or `accept-keysend=True`) is included somewhere in the text.
 
-If `accept-keysend=1` is already included you can continue without changing anything. If `accept-keysend=1` is not included, add it to a new line and click the `Save` button. This will restart your device. (Restarting could take up to several minutes but also hours, so be patient.)
+If `accept-keysend=True` or `accept-keysend=1` is already included you can continue without changing anything. If `accept-keysend=True` is not included, add it to a new line and click the `Save` button. This will restart your device. (Restarting could take up to several minutes but also hours, so be patient.)
 
 #### Raspiblitz:
 Go to raspiblitz menu, or:
@@ -131,7 +131,6 @@ Find item menu "Services" and activate Keysend
 Now it's time to run the software.
 
 ```sh 
-$ cd
 $ cd sphinx-relay/config/
 $ npm run prod
 ```
